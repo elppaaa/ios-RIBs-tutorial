@@ -21,6 +21,9 @@ protocol RootDependency: Dependency {
   // created by this RIB.
 }
 
+/// Component 의 역할.
+/// 의존성을 관리한다.
+/// 자식에게 의존성 주입 역할도 수행
 final class RootComponent: Component<RootDependency> {
   
   let rootViewController: RootViewController
