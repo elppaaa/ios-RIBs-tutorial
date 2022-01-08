@@ -17,55 +17,64 @@
 import RIBs
 import RxSwift
 
+/// loggedOut Router 의 sub RIB 을 라우팅 해줄 때에 사용
 protocol LoggedOutRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+  // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol LoggedOutPresentable: Presentable {
-    var listener: LoggedOutPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+  var listener: LoggedOutPresentableListener? { get set }
+  // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
+/// Parent 에게 알리는 역할 수행
+///
 protocol LoggedOutListener: AnyObject {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+  // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+  /// login 이 성공적으로 끝났다는 것을 알림.
+  func didLogin(withPlayer1Name player1Name: String, player2Name: String)
 }
 
-final class LoggedOutInteractor: PresentableInteractor<LoggedOutPresentable>, LoggedOutInteractable, LoggedOutPresentableListener {
+final class LoggedOutInteractor: PresentableInteractor<LoggedOutPresentable>, LoggedOutInteractable {
+  
+  weak var router: LoggedOutRouting?
+  
+  weak var listener: LoggedOutListener?
+  
+  // TODO: Add additional dependencies to constructor. Do not perform any logic
+  // in constructor.
+  override init(presenter: LoggedOutPresentable) {
+    super.init(presenter: presenter)
+    presenter.listener = self
+  }
+  
+  override func didBecomeActive() {
+    super.didBecomeActive()
+    // TODO: Implement business logic here.
+  }
+  
+  override func willResignActive() {
+    super.willResignActive()
+    // TODO: Pause any business logic.
+  }
+}
 
-    weak var router: LoggedOutRouting?
-
-    weak var listener: LoggedOutListener?
-
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
-    // in constructor.
-    override init(presenter: LoggedOutPresentable) {
-        super.init(presenter: presenter)
-        presenter.listener = self
+extension LoggedOutInteractor: LoggedOutPresentableListener {
+  // MARK: - LoggedOutPresentableListener
+  
+  func login(withPlayer1Name player1Name: String?, player2Name: String?) {
+    let player1NameWithDefault = playerName(player1Name, withDefaultName: "Player 1")
+    let player2NameWithDefault = playerName(player2Name, withDefaultName: "Player 2")
+    
+    // LoggedOutListener 에게 로그인을 수행했다고 알린다.
+    listener?.didLogin(withPlayer1Name: player1NameWithDefault, player2Name: player2NameWithDefault)
+  }
+  
+  private func playerName(_ name: String?, withDefaultName defaultName: String) -> String {
+    if let name = name {
+      return name.isEmpty ? defaultName : name
+    } else {
+      return defaultName
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
-    }
-
-    // MARK: - LoggedOutPresentableListener
-
-    func login(withPlayer1Name player1Name: String?, player2Name: String?) {
-        let player1NameWithDefault = playerName(player1Name, withDefaultName: "Player 1")
-        let player2NameWithDefault = playerName(player2Name, withDefaultName: "Player 2")
-        print("\(player1NameWithDefault) vs \(player2NameWithDefault)")
-    }
-
-    private func playerName(_ name: String?, withDefaultName defaultName: String) -> String {
-        if let name = name {
-            return name.isEmpty ? defaultName : name
-        } else {
-            return defaultName
-        }
-    }
+  }
 }
