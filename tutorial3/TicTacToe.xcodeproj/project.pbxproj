@@ -12,6 +12,7 @@
 		483EE8F3278ACC070030DE1B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 483EE8F2278ACC070030DE1B /* RxCocoa */; };
 		483EE8F5278ACC070030DE1B /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 483EE8F4278ACC070030DE1B /* RxRelay */; };
 		483EE8F7278ACC070030DE1B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 483EE8F6278ACC070030DE1B /* RxSwift */; };
+		483EE8F9278AE9AF0030DE1B /* ScoreStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483EE8F8278AE9AF0030DE1B /* ScoreStream.swift */; };
 		7EDD59501FA13579005EC8B2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDD594F1FA13579005EC8B2 /* Default-568h@2x.png */; };
 		E9CB1D521F97303800D84847 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB1D351F972FD500D84847 /* AppDelegate.swift */; };
 		E9CB1D531F97305A00D84847 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB1D341F972FD500D84847 /* AppComponent.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		483EE8F8278AE9AF0030DE1B /* ScoreStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreStream.swift; sourceTree = "<group>"; };
 		7EDD594F1FA13579005EC8B2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E9894B4A1F972CC500688FCB /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9894B591F972CC500688FCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				E9CB1D481F972FE500D84847 /* LoggedInBuilder.swift */,
 				E9CB1D491F972FE500D84847 /* LoggedInComponent+OffGame.swift */,
 				E9CB1D4A1F972FE500D84847 /* LoggedInComponent+TicTacToe.swift */,
+				483EE8F8278AE9AF0030DE1B /* ScoreStream.swift */,
 				E9CB1D4B1F972FE500D84847 /* LoggedInInteractor.swift */,
 				E9CB1D4C1F972FE500D84847 /* LoggedInRouter.swift */,
 			);
@@ -281,6 +284,7 @@
 				E9CB1D571F9730E400D84847 /* LoggedInInteractor.swift in Sources */,
 				E9CB1D5D1F9730EB00D84847 /* OffGameBuilder.swift in Sources */,
 				E9CB1D641F9730EF00D84847 /* RootInteractor.swift in Sources */,
+				483EE8F9278AE9AF0030DE1B /* ScoreStream.swift in Sources */,
 				E9CB1D631F9730EF00D84847 /* RootComponent+LoggedOut.swift in Sources */,
 				E9CB1D591F9730E700D84847 /* LoggedOutBuilder.swift in Sources */,
 				E9CB1D581F9730E400D84847 /* LoggedInRouter.swift in Sources */,
