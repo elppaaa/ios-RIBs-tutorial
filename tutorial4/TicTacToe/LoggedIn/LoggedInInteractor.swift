@@ -69,3 +69,17 @@ final class LoggedInInteractor: Interactor, LoggedInInteractable {
     private var games = [Game]()
 
 }
+
+extension LoggedInInteractor: LoggedInActionableItem {
+  func launchGame(widh id: String?) -> Observable<(LoggedInActionableItem, ())> {
+    let game: Game? = games.first { game in
+      game.id.lowercased() == id?.lowercased()
+    }
+    
+    if let game = game {
+      router?.routeToGame(with: game.builder)
+    }
+    
+    return Observable.just((self, ()))
+  }
+}

@@ -21,73 +21,73 @@ import SnapKit
 import UIKit
 
 protocol RandomWinPresentableListener: AnyObject {
-    func determineWinner()
+  func determineWinner()
 }
 
 final class RandomWinViewController: UIViewController, RandomWinPresentable, RandomWinViewControllable {
-
-    weak var listener: RandomWinPresentableListener?
-
-    init(player1Name: String,
-         player2Name: String) {
-        self.player1Name = player1Name
-        self.player2Name = player2Name
-        super.init(nibName: nil, bundle: nil)
+  
+  weak var listener: RandomWinPresentableListener?
+  
+  init(player1Name: String,
+       player2Name: String) {
+    self.player1Name = player1Name
+    self.player2Name = player2Name
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("Method is not supported")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    view.backgroundColor = UIColor.cyan
+    buildGoButton()
+  }
+  
+  // MARK: - RandomWinPresentable
+  
+  func announce(winner: PlayerType, withCompletionHandler handler: @escaping () -> ()) {
+    let winnerString: String = {
+      switch winner {
+      case .player1:
+        return "\(player1Name) Won!"
+      case .player2:
+        return "\(player2Name) Won!"
+      }
+    }()
+    let alert = UIAlertController(title: winnerString, message: nil, preferredStyle: .alert)
+    let closeAction = UIAlertAction(title: "That was random...", style: UIAlertAction.Style.default) { _ in
+      handler()
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Method is not supported")
+    alert.addAction(closeAction)
+    present(alert, animated: true, completion: nil)
+  }
+  
+  // MARK: - Private
+  
+  private let player1Name: String
+  private let player2Name: String
+  
+  private func buildGoButton() {
+    let button = UIButton()
+    button.setTitle("Magic", for: .normal)
+    button.backgroundColor = UIColor.purple
+    button.setTitleColor(UIColor.white, for: .normal)
+    view.addSubview(button)
+    button.snp.makeConstraints { (maker: ConstraintMaker) in
+      maker.center.equalTo(self.view.snp.center)
+      maker.leading.trailing.equalTo(self.view).inset(20)
+      maker.height.equalTo(100)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = UIColor.cyan
-        buildGoButton()
-    }
-
-    // MARK: - RandomWinPresentable
-
-    func announce(winner: PlayerType, withCompletionHandler handler: @escaping () -> ()) {
-        let winnerString: String = {
-            switch winner {
-            case .player1:
-                return "\(player1Name) Won!"
-            case .player2:
-                return "\(player2Name) Won!"
-            }
-        }()
-        let alert = UIAlertController(title: winnerString, message: nil, preferredStyle: .alert)
-        let closeAction = UIAlertAction(title: "That was random...", style: UIAlertActionStyle.default) { _ in
-            handler()
-        }
-        alert.addAction(closeAction)
-        present(alert, animated: true, completion: nil)
-    }
-
-    // MARK: - Private
-
-    private let player1Name: String
-    private let player2Name: String
-
-    private func buildGoButton() {
-        let button = UIButton()
-        button.setTitle("Magic", for: .normal)
-        button.backgroundColor = UIColor.purple
-        button.setTitleColor(UIColor.white, for: .normal)
-        view.addSubview(button)
-        button.snp.makeConstraints { (maker: ConstraintMaker) in
-            maker.center.equalTo(self.view.snp.center)
-            maker.leading.trailing.equalTo(self.view).inset(20)
-            maker.height.equalTo(100)
-        }
-
-        button.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.listener?.determineWinner()
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private let disposeBag = DisposeBag()
+    
+    button.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.listener?.determineWinner()
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  private let disposeBag = DisposeBag()
 }

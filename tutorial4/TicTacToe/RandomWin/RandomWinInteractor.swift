@@ -16,6 +16,7 @@
 
 import RIBs
 import RxSwift
+import Foundation
 
 public protocol RandomWinRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
